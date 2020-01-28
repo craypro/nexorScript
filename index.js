@@ -51,9 +51,9 @@ let main = async () => {
     const idsOfSaleFromCSV = await GetIdsFromCSV() //obtener los ids desde el input
     // const ids = testIds() //obtener los ids desde el input
     console.log("idsOfSaleFromCSV length", idsOfSaleFromCSV.length)
-    const STEP = 20
-    let first = 0
-    let last = STEP
+    const STEP  = 20
+    let first   = 0
+    let last    = STEP - 1; 
     do {
         FinishBatchCallback(await CheckThisBatch(idsOfSaleFromCSV.slice(first, last), first, last));
         first += STEP;
