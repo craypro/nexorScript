@@ -7,8 +7,9 @@ const headers = {
     'X-Auth-Tenant': 'Edulynks'
 };
 const ENDPOINT_API_URL = `/masterkey/agency/sale/:id/saleOrder`
-const PATH_INPUT_CSV = 'input 2.csv' //Nombre del archivo input donde se espera que esten los ids
+const PATH_INPUT_CSV = 'input.csv' //Nombre del archivo input donde se espera que esten los ids
 const PATH_OUTPUT_CSV = 'output.csv' //Nombre del archivo output donde se guardara el resultado
+
 const EXPORT_CSV_OPTIONS = {
     "fields": [{
             "name": "sale.id",
@@ -53,12 +54,11 @@ let main = async () => {
     console.log("idsOfSaleFromCSV length", idsOfSaleFromCSV.length)
     const STEP  = 20
     let first   = 0
-    let last    = STEP - 1; 
+    let last    = STEP; 
     do {
         FinishBatchCallback(await CheckThisBatch(idsOfSaleFromCSV.slice(first, last), first, last));
         first += STEP;
         last += STEP;
-
     } while (finalSaleOrderItems.length != idsOfSaleFromCSV.length)
     
     console.log("Exportando"); 
@@ -68,10 +68,11 @@ let main = async () => {
 }
 let CheckThisBatch = (idsOfSaleFromCSV, first, last) => {
     return new Promise(resolve => {
+        
         ReturnedPetitionCounter = idsOfSaleFromCSV.length;
 
         let batchItems = []
-        console.log(`Buscando items del array ${first} hasta ${last}`);
+        console.log(`Buscando ${idsOfSaleFromCSV.length} items del array ${first} hasta ${last}`);
         idsOfSaleFromCSV.forEach((saleId) => {
             let url = ENDPOINT_API_URL;
             url = url.replace(":id", saleId["field1"].toString());
