@@ -60,6 +60,8 @@ let main = async () => {
         last += STEP;
 
     } while (finalSaleOrderItems.length != idsOfSaleFromCSV.length)
+    
+    console.log("Exportando"); 
     putResultInCSV() //Genera el CSV a partir de los items
     console.log("Terminado"); //visualmente mostramos que termino el proceso
 
